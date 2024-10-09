@@ -1,0 +1,221 @@
+<!-- BEGIN: main -->
+
+<style>
+	.error-message {
+		width: 100%;
+		background-color: #fde0e0;
+		border: 1px solid #ddd;
+		 border-radius: 3px;
+		padding: 10px;
+		color: #b00;
+		font-weight: bold;
+		left: 10px;
+		display: none;
+	}
+	.error-message.visible {
+		display: block;
+	}
+	#error-message-text{
+		color: #b00;
+	}
+	td {
+		padding: 4px 11px 10px !important;
+	}
+	#whiteList {
+		width: 62%;
+		height: 108px;
+	}
+	#searchPublicNetIP{
+		padding: 0 24px !important;
+	}
+	.modal-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5); /* Semi-transparent dark background */
+		backdrop-filter: blur(5px); /* Blur effect */
+		z-index: 999;
+	}
+	/* Modal content */
+	.modal-content {
+		position: fixed;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background-color: white;
+		padding: 20px;
+		border-radius: 8px;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+		z-index: 1000;
+		width: 600px;
+	}
+	body.modal-open {
+		overflow: hidden;
+	}
+</style>
+<script src="modules/LS_CRM_Defender/js/util.js"></script>
+
+
+<form name="ConfigureSettings" id="EditView" method="POST" action="index.php?module=LS_CRM_Defender&action=SaveConfig&process=true">
+	<input type="hidden" id="module" name="module" value="LS_CRM_Defender"/>
+	<input type="hidden" id="globalIP" name="globalIP" value="{globalIP}"/>
+	<input type="hidden" id="cancelbutton" name="cancelbutton" value="" />
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+
+		<td style="padding-bottom: 2px;">
+
+<input title="Save" accesskey="a" class="button primary" onclick="" name="button" value="  Save " type="submit">
+
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" accessKey="{APP.LBL_CANCEL_BUTTON_KEY}" class="button" onclick="this.form.cancelbutton.value='1'; this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" id="cancel" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+		</td>
+		<td align="right" nowrap>
+
+		</td>
+	</tr>
+	<tr>
+		<td colspan=2>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tabForm">
+				<tr width="100%">
+					<th  width="100%">
+						<div id="error-message" class="error-message hidden">
+							<p id="error-message-text"></p>
+						</div>
+					</th>
+				</tr>
+				<tr>
+					<td>
+						<table width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_BLOCK_ALL_IPS_REGARDING_ONCE}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="blockAllIpsButOnce" tabindex='1' value="1" class="checkbox" type="checkbox" {blockAllIpsButOnce}>
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_FREE_LOCALHOST}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="free_localhost" tabindex='1' value="1" class="checkbox" type="checkbox" {free_localhost}>
+								</td>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_MAX_FAILED_ACCESSES}
+								</td>
+								<td width="30%" class="dataField">
+									<input type="text" id= "maxFailedAccesses" name = "maxFailedAccesses" size = 3 maxlength="3" value= "{maxFailedAccesses}" >
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel" style="vertical-align:text-top">
+									{MOD.LBL_WHITELIST}
+								</td>
+								<td width="30%" class="dataField" valign='top'>
+									<textarea name="whiteList" id="whiteList" tabindex='1' form="EditView">{whiteList}</textarea>
+									<BR>
+									<em>{MOD.LBL_WHITELIST_INSTRUCTIONS}</em>
+
+								<div style="padding-bottom: 2px;">
+									<input class="button primary" name="button" value="ASC" id="set_to_asc" type="button" style="margin-right: 40px;padding: 0px 32px;background: #757272;">
+									<input class="button" type="button" id="set_to_desc" name="button" value="DESC" style="padding: 0px 29px;background: #757272;">
+								</div>
+
+								</td>
+								<td width="20%" class="dataLabel" style="vertical-align:text-top">
+									{MOD.LBL_WHITE_YOUR_IP}
+								</td>
+								<td width="30%" class="dataField" style="vertical-align:text-top">
+									<input title="{MOD.LBL_YOUR_LOCAL_NET_IP}" class="button" type="button" name="button" value="{MOD.LBL_YOUR_LOCAL_NET_IP}" id="searchLocalNetIP">
+									<BR>
+									<input title="{MOD.LBL_YOUR_PUBLIC_NET_IP}" class="button" type="button" name="button" value="{MOD.LBL_YOUR_PUBLIC_NET_IP}" id="searchPublicNetIP">
+								</td>
+							</tr>
+							<tr>
+								<td width="20%" class="dataLabel">
+									{MOD.LBL_RECIPIENTADDRESS_ENABLED}
+								</td>
+								<td width="30%" class="dataField">
+									<input name="recipientAddressEnabled" tabindex='1' value="1" class="checkbox" type="checkbox" {recipientAddressEnabled}>
+								</td>
+								<td width="20%" class="dataLabel" style="vertical-align:text-top">
+									{MOD.LBL_RECIPIENTADDRESS}
+								</td>
+								<td>
+								<input name="recipientAddress" tabindex='1' value="{recipientAddress}" type="text" id="recipientAddress" >
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</td>
+		</tr>
+	</table>
+<P></P>
+
+<div style="padding-top:10px;">
+			<input title="{APP.LBL_SAVE_BUTTON_TITLE}" class="button" type="submit" id="save2" name="button" value=" {APP.LBL_SAVE_BUTTON_LABEL} ">
+			<input title="{APP.LBL_CANCEL_BUTTON_TITLE}" class="button" onclick="this.form.cancelbutton.value='1'; this.form.action.value='{RETURN_ACTION}'; this.form.module.value='{RETURN_MODULE}';" type="submit" name="button" value=" {APP.LBL_CANCEL_BUTTON_LABEL} ">
+</div>
+</form>
+<script>
+	// Get URL parameters
+	const urlParams = new URLSearchParams(window.location.search);
+
+	// Check if 'error_message' parameter exists
+	const errorMessage = urlParams.get('error_message');
+
+	// Reference the error message elements
+	const errorMessageDiv = document.getElementById('error-message');
+	const errorMessageText = document.getElementById('error-message-text');
+
+	// If error_message exists, display it in the error div
+	if (errorMessage) {
+		errorMessageText.textContent = errorMessage;
+		errorMessageDiv.classList.remove('hidden'); // Add visible class
+		errorMessageDiv.classList.add('visible'); // For smooth transition
+
+		setTimeout(() => {
+			errorMessageDiv.classList.remove('visible');
+			errorMessageDiv.classList.add('hidden');
+		}, 10000);
+	}
+
+	function ipToNum(ip) {
+		return ip.split('.').map(function(part) {
+			return parseInt(part, 10);
+		});
+	}
+	function compareIps(a, b) {
+		var ipA = ipToNum(a);
+		var ipB = ipToNum(b);
+
+		// Compare each segment of the IP address
+		for (var i = 0; i < 4; i++) {
+			if (ipA[i] < ipB[i]) return -1;
+			if (ipA[i] > ipB[i]) return 1;
+		}
+		return 0;
+	}
+
+	document.getElementById('set_to_asc').addEventListener('click', function(event) {
+		event.preventDefault();
+		var whiteListElement = document.getElementById('whiteList');
+		var whitelistValue = whiteListElement.value.split('\n').filter(Boolean); // Remove any empty lines
+		var sortedArray = whitelistValue.sort(compareIps);
+		whiteListElement.value = sortedArray.join('\n');
+	});
+
+	document.getElementById('set_to_desc').addEventListener('click', function(event) {
+		event.preventDefault();
+		var whiteListElement = document.getElementById('whiteList');
+		var whitelistValue = whiteListElement.value.split('\n').filter(Boolean); // Remove any empty lines
+		var sortedArray = whitelistValue.sort(compareIps).reverse();
+		whiteListElement.value = sortedArray.join('\n');
+	});
+</script>
+<!-- END: main -->
