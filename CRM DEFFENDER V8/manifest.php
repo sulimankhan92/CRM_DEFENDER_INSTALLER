@@ -22,7 +22,7 @@ $manifest = array (
 	'name' => 'Lion Solution CRM Defender',
 	'published_date' => '2023-10-31',
 	'type' => 'module',
-	'version' => '1.3.4_6x',
+	'version' => '1.0.8x',
 	'remove_tables' => 'prompt',
 );
 $installdefs = array (

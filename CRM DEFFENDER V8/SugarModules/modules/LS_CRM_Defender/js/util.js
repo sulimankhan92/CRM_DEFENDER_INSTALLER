@@ -1,6 +1,6 @@
 /**
  * Check for every line of lines array if line[i] is a valid ip address
- * @param {array} lines 
+ * @param {array} lines
  * @return {string} errorString: Error Message. Return an empty string if everything is ok
  */
 function verifyIP (lines) {
@@ -19,7 +19,7 @@ function verifyIP (lines) {
 
 /**
  * Check if the value is integer
- * @param {} value 
+ * @param {} value
  * @return {string} Error Message. Return an empty string if everything is ok
  */
 function isInt(value) {
@@ -28,8 +28,8 @@ function isInt(value) {
 	if (value == null || value==""){
 		return "";
 	} //if null
-	if ( !isNaN(value) && 
-		 parseInt(Number(value)) == value && 
+	if ( !isNaN(value) &&
+		 parseInt(Number(value)) == value &&
 		 !isNaN(parseInt(value, 10))){
 		 if (value>100)
 			errorString += theName + ': '+value+' is too high.\n';
@@ -37,12 +37,12 @@ function isInt(value) {
 	} //if NaN
 	else
 		errorString += theName + ': '+value+' is not a valid input.\n';
-	return errorString;	
+	return errorString;
 }
 
 /**
  * Check if the value is correct email
- * @param {} value 
+ * @param {} value
  * @return {string} Error Message. Return an empty string if everything is ok
  */
 function verifyAddr(recipientAddress) {
@@ -51,14 +51,14 @@ function verifyAddr(recipientAddress) {
 	if (recipientAddress == null || recipientAddress=="")
 		return "";
 	var regexTest = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(recipientAddress);
-	if (!regexTest) {  
+	if (!regexTest) {
 		errorString += theName + ': '+recipientAddress+' is not a valid email.\n';
 		return errorString;
 	}//if
 	else{
-		
+
 		return "";
-	}	
+	}
 }
 
 /**
@@ -66,7 +66,7 @@ function verifyAddr(recipientAddress) {
  * @return {string} Error Message. Return an empty string if everything is ok
  */
 function verify(){
-	var message = ""; 
+	var message = "";
 	var lines = document.getElementById('whiteList').value.split('\n');
 	var maxFailedAccesses = document.getElementById('maxFailedAccesses').value;
 	var recipientAddress = document.getElementById('recipientAddress').value;
@@ -80,10 +80,10 @@ $(document).ready(function() {
 	$("#EditView").submit(function(event){
 	if (document.getElementById('cancelbutton').value!=1) {
 		var $result = verify();
-		if($result!="") { 
+		if($result!="") {
 			alert($result);
-			event.preventDefault();  
-		} //if 
+			event.preventDefault();
+		} //if
 	} //if
   }); //EditView submit
 
@@ -106,7 +106,7 @@ $(document).ready(function() {
 			showWebRTCSettingsPopup();
 		});
 	});
-	
+
 	$.getJSON("https://jsonip.com/?callback=?", function (data) {
 		window.globalPublicIP = data.ip;
 	}); //getJSON
@@ -126,7 +126,7 @@ $(document).ready(function() {
 		alert("IP address already exists in the whitelist.");
 		}
 	}); //searchPublicNetIP
-  
+
 }); //document.ready function
 
 
@@ -204,7 +204,7 @@ function showWebRTCSettingsPopup() {
           For Firefox: Go to the appropriate settings manually.
         </li>
       </ul>
-      <button class="button" id="closePopup">Close</button>
+      <button class="button" id="closePopup" style="margin-top: 10px;">Close</button>
     `;
 
   // Append the modal and background to the body
